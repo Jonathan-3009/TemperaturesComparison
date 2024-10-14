@@ -1,0 +1,68 @@
+using System;
+
+class Program
+{
+    static void Main()
+    {
+        double[] temperatures = new double[5];
+        int count = 0;  
+        bool isIncreasing = true;  
+        bool isDecreasing = true;  
+
+        while (count < 5)
+        {
+            Console.Write($"Enter temperature {count + 1} (between -30 and 130): ");
+            string input = Console.ReadLine();
+
+            if (double.TryParse(input, out double temperature) && temperature >= -30 && temperature <= 130)
+            {
+                temperatures[count] = temperature;
+
+                if (count > 0)
+                {
+                    if (temperature <= temperatures[count - 1])  
+                    {
+                        isIncreasing = false;
+                    }
+                    if (temperature >= temperatures[count - 1])  
+                    {
+                        isDecreasing = false;
+                    }
+                }
+
+                count++;  
+            }
+            else
+            {
+                Console.WriteLine("Temperature out of range or invalid. Please enter a valid temperature between -30 and 130.");
+            }
+        }
+
+        if (isIncreasing)
+        {
+            Console.WriteLine("Getting warmer");
+        }
+        else if (isDecreasing)
+        {
+            Console.WriteLine("Getting cooler");
+        }
+        else
+        {
+            Console.WriteLine("It’s a mixed bag");
+        }
+
+        Console.WriteLine("\nTemperatures entered:");
+        foreach (double temp in temperatures)
+        {
+            Console.WriteLine($"{temp}°F");
+        }
+
+        double sum = 0;
+        foreach (double temp in temperatures)
+        {
+            sum += temp;
+        }
+        double average = sum / temperatures.Length;
+        Console.WriteLine($"\nAverage temperature: {average:F2}°F");
+    }
+}
